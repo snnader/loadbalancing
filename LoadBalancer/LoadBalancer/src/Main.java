@@ -19,7 +19,6 @@ public class Main {
 //        subscribers.add(new ThroughoutStatistics());
 //        subscribers.add(new ResponseTimeStatistics());
 //        subscribers.add(new FailureRateStatistics());
-        subscribers.add(algorithm);
 
 
         LoadBalancer loadBalancer = new LoadBalancer(subscribers, algorithm);

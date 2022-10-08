@@ -45,6 +45,8 @@ public class RequestHandler implements HttpHandler {
         System.out.println("Chosen server: " + worker.ip + ":" + worker.port);
         String uri = "http://" + worker.ip + ":" + worker.port + "?" + httpExchange.getRequestURI().getRawQuery();
 
+        algorithm.onRequest(worker, new Request(httpExchange));
+
         // Forward request to the server
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(URI.create(uri)).build();
@@ -56,6 +58,8 @@ public class RequestHandler implements HttpHandler {
         for (Subscriber sub: this.subscribers) {
             sub.onResponse(new Response(worker, response));
         }
+
+        algorithm.onResponse(new Response(worker, response));
 
         // Forward the response to the client
         httpExchange.sendResponseHeaders(200, response.body().length());
