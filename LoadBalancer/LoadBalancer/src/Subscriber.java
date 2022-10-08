@@ -1,4 +1,4 @@
 public interface Subscriber {
-    void onRequest();
-    void onResponse();
+    void onRequest(Request request);
+    void onResponse(Response response);
 }

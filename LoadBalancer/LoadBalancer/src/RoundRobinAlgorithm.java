@@ -8,17 +8,17 @@ public class RoundRobinAlgorithm implements LBAlgorithm {
         this.workers = workers;
     }
 
-    public Worker choose() {
+    public Worker choose(Request request) {
         Worker worker = workers.get(index % workers.size());
         this.index += 1;
         return worker;
     }
 
-    public void onRequest() {
+    public void onRequest(Request request) {
 
     }
 
-    public void onResponse() {
+    public void onResponse(Response response) {
 
     }
 }

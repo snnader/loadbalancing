@@ -20,9 +20,11 @@ public class RequestHandler implements HttpHandler {
         this.algorithm = algorithm;
     }
 
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void handle(HttpExchange httpExchange) {
         try {
             handleRequest(httpExchange);
+        } catch (IOException e) {
+            System.out.println(e);
         } catch (InterruptedException e) {
             System.out.println(e);
         } catch (ExecutionException e) {
@@ -35,29 +37,30 @@ public class RequestHandler implements HttpHandler {
         // TODO
         // handle potential data race
         for (Subscriber sub: this.subscribers) {
-            sub.onRequest();
+            sub.onRequest(new Request(httpExchange));
         }
 
         // Select the worker to handle the request
-        Worker worker = algorithm.choose();
+        Worker worker = algorithm.choose(new Request(httpExchange));
+        System.out.println("Chosen server: " + worker.ip + ":" + worker.port);
         String uri = "http://" + worker.ip + ":" + worker.port + "?" + httpExchange.getRequestURI().getRawQuery();
 
         // Forward request to the server
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(URI.create(uri)).build();
         var responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
-        var response = responseFuture.get().body();
+        var response = responseFuture.get();
 
         // TODO
         // handle potential data race
         for (Subscriber sub: this.subscribers) {
-            sub.onResponse();
+            sub.onResponse(new Response(worker, response));
         }
 
         // Forward the response to the client
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.body().length());
         OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
+        os.write(response.body().getBytes());
         os.close();
     }
 }

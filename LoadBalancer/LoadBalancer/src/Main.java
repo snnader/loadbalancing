@@ -7,8 +7,8 @@ public class Main {
         // All worker nodes
         List workers = new ArrayList<Worker>();
         workers.add(new Worker("127.0.0.1", "8002"));
-        workers.add(new Worker("127.0.0.1", "8003"));
-        workers.add(new Worker("127.0.0.1", "8004"));
+//        workers.add(new Worker("127.0.0.1", "8003"));
+//        workers.add(new Worker("127.0.0.1", "8004"));
 
         // Load Balancing Algorithm
         LBAlgorithm algorithm = new RoundRobinAlgorithm(workers);
@@ -20,7 +20,6 @@ public class Main {
 //        subscribers.add(new ResponseTimeStatistics());
 //        subscribers.add(new FailureRateStatistics());
         subscribers.add(algorithm);
-
 
 
         LoadBalancer loadBalancer = new LoadBalancer(subscribers, algorithm);
