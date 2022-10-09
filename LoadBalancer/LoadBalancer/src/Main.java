@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         // All worker nodes
-        List workers = new ArrayList<Worker>();
+        List<Worker> workers = new ArrayList<>();
         workers.add(new Worker("127.0.0.1", "8002"));
 //        workers.add(new Worker("127.0.0.1", "8003"));
 //        workers.add(new Worker("127.0.0.1", "8004"));
@@ -14,7 +14,7 @@ public class Main {
         LBAlgorithm algorithm = new RoundRobinAlgorithm(workers);
 
         // All subscribers
-        List subscribers = new ArrayList<Subscriber>();
+        List<Subscriber> subscribers = new ArrayList<>();
         subscribers.add(new RequestCountStatistics());
 //        subscribers.add(new ThroughoutStatistics());
 //        subscribers.add(new ResponseTimeStatistics());
