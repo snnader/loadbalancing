@@ -15,7 +15,6 @@ public class RoundRobinAlgorithm implements LBAlgorithm {
     }
 
     public void onRequest(Worker worker, Request request) {
-        System.out.println("Round Robin onRequest");
     }
 
     public void onResponse(Response response) {
