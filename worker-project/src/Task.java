@@ -2,23 +2,21 @@ public class Task {
     public final int cpu;
     public final int mem;
     public final int io;
-    public final int dur;
 
-    private static final int CPU_ITER = 100000;
-    private static final int MEM_SIZE = 30000000;
-    private static final int IO_SIZE = 30000000;
+    private static final int CPU_ITER = 10000000;
+    private static final int MEM_SIZE = 50000000;
+    private static final int IO_SIZE = 50000000;
     private static final int NUM_THREADS = 2;
 
-    public Task(int cpu, int mem, int io, int dur) throws IllegalArgumentException {
-        if (cpu < 1 || cpu > 10 || mem < 1 || mem > 10 || io < 1 || io > 10 || dur < 0) {
+    public Task(int cpu, int mem, int io) throws IllegalArgumentException {
+        if (cpu < 1 || cpu > 10 || mem < 1 || mem > 10 || io < 1 || io > 10) {
             throw new IllegalArgumentException(
-                    "CPU, Mem, and IO should be between 1 and 10 and duration should be positive"
+                    "CPU, Mem, and IO should be between 1 and 10"
             );
         }
         this.cpu = cpu;
         this.mem = mem;
         this.io = io;
-        this.dur = dur;
     }
 
     public void run() throws InterruptedException {
@@ -47,11 +45,10 @@ public class Task {
     }
 
     private void loadCPU(int level) {
-        long startTime = System.currentTimeMillis();
         try {
-            while (System.currentTimeMillis() - startTime < this.dur) {
+            for (int i = 0; i < level * CPU_ITER; i++) {
                 if (System.currentTimeMillis() % 100 == 0) {
-                    Thread.sleep((10L - level) * 10L);
+                    Thread.sleep(0);
                 }
             }
         } catch (InterruptedException e) {
@@ -60,7 +57,9 @@ public class Task {
     }
 
     private void loadMem(int level) {
-
+        byte[] load = new byte[MEM_SIZE * level];
+        load[0] = 'a';
+        load[load.length-1] = 'z';
     }
 
     private void loadIO(int level) {
@@ -71,7 +70,6 @@ public class Task {
     public String toString() {
         return "Task{CPU Load = " + this.cpu + "/10" +
                 ", Memory Load = " + this.mem + "/10" +
-                ", IO Load = " + this.io + "/10" +
-                ", Duration = " + this.dur + " ms}";
+                ", IO Load = " + this.io + "/10}";
     }
 }

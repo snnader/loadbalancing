@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import com.sun.net.httpserver.HttpServer;
 
 public class Worker {
-    public InetAddress ipAddress = InetAddress.getByName("localhost");
+    public InetAddress ipAddress = InetAddress.getByName("0.0.0.0");
     public int port = 8001;
     public HttpServer server;
 
