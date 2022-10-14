@@ -1,11 +1,15 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Task {
     public final int cpu;
     public final int mem;
     public final int io;
 
     private static final int CPU_ITER = 10000000;
-    private static final int MEM_SIZE = 50000000;
-    private static final int IO_SIZE = 50000000;
+    private static final int MEM_SIZE = 50000;
+    private static final int IO_SIZE = 50000;
     private static final int NUM_THREADS = 2;
 
     public Task(int cpu, int mem, int io) throws IllegalArgumentException {
@@ -57,13 +61,41 @@ public class Task {
     }
 
     private void loadMem(int level) {
-        byte[] load = new byte[MEM_SIZE * level];
-        load[0] = 'a';
-        load[load.length-1] = 'z';
+        int num_arrays = 1000;
+        for (int i = 0; i < num_arrays; i++) {
+            byte[] load = new byte[level * MEM_SIZE];
+            load[0] = 'a';
+            load[load.length-1] = 'z';
+            byte x = load[0];
+        }
     }
 
     private void loadIO(int level) {
-
+        int num_files = 1000;
+        File[] files = new File[num_files];
+        try {
+            for(int i = 0; i < num_files; i++) {
+                files[i] = new File("file" + i);
+                if (files[i].createNewFile()) {
+                    try {
+                        FileWriter writer = new FileWriter("file" + i);
+                        for (int j = 0; j < level * IO_SIZE/10; j++) {
+                            writer.write("aaaaaaaaaa");
+                        }
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("File already exists!");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < num_files; i++) {
+            files[i].delete();
+        }
     }
 
     @Override
