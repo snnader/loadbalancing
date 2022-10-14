@@ -1,6 +1,5 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class Task {
     public final int cpu;
@@ -71,14 +70,14 @@ public class Task {
     }
 
     private void loadIO(int level) {
-        int num_files = 1000;
+        int num_files = 100;
         File[] files = new File[num_files];
         try {
             for(int i = 0; i < num_files; i++) {
-                files[i] = new File("file" + i);
+                files[i] = new File(super.toString() + " file " + i);
                 if (files[i].createNewFile()) {
                     try {
-                        FileWriter writer = new FileWriter("file" + i);
+                        FileWriter writer = new FileWriter(files[i]);
                         for (int j = 0; j < level * IO_SIZE/10; j++) {
                             writer.write("aaaaaaaaaa");
                         }
@@ -92,6 +91,15 @@ public class Task {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        for (int i = 0; i < num_files; i++) {
+            try {
+                Scanner reader = new Scanner(files[i]);
+                reader.nextLine();
+                reader.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         for (int i = 0; i < num_files; i++) {
             files[i].delete();
