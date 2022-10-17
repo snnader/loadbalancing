@@ -1,6 +1,7 @@
 import com.sun.net.httpserver.HttpExchange;
 
 public class RequestCountStatistics implements Subscriber {
+
     public int count = 0;
 
     public void onRequest(Request request) {

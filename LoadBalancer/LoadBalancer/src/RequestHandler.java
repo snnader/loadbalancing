@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -53,7 +54,7 @@ public class RequestHandler implements HttpHandler {
 
         // Forward request to the server
         var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(URI.create(uri)).build();
+        var request = HttpRequest.newBuilder(URI.create(uri)).timeout(Duration.ofSeconds(2)).build(); // timeout 2 seconds
         var responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
         var response = responseFuture.get();
 

@@ -15,10 +15,9 @@ public class Main {
 
         // All subscribers
         List<Subscriber> subscribers = new ArrayList<>();
-        subscribers.add(new RequestCountStatistics());
-//        subscribers.add(new ThroughoutStatistics());
-//        subscribers.add(new ResponseTimeStatistics());
-//        subscribers.add(new FailureRateStatistics());
+        subscribers.add(new ResponseTimeStatistics());
+        subscribers.add(new ThroughputStatistics());
+        subscribers.add(new FailureRateStatistics());
 
 
         LoadBalancer loadBalancer = new LoadBalancer(subscribers, algorithm);
