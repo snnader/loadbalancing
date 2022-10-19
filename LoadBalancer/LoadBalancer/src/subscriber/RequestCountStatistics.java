@@ -1,6 +1,10 @@
-import com.sun.net.httpserver.HttpExchange;
+package subscriber;
 
-public class RequestCountStatistics implements Subscriber {
+import network.Request;
+import network.Response;
+import subscriber.AbstractSubscriber;
+
+public class RequestCountStatistics extends AbstractSubscriber {
 
     public int count = 0;
 

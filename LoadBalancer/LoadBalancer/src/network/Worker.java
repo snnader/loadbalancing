@@ -1,3 +1,5 @@
+package network;
+
 public class Worker {
     public String ip;
     public String port;

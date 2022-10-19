@@ -1,13 +1,20 @@
+package subscriber;
+
+import network.Request;
+import network.Response;
+import util.Logger;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ThroughputStatistics implements Subscriber {
+public class ThroughputStatistics extends AbstractSubscriber {
     public int traffic = 0;
     public long startTime = 0; // last start of a time period
     public long beginTime = 0; // log starting time
 
     public ThroughputStatistics() {
+        Logger.log("Throughput", "[0] Started");
         this.startTime = System.currentTimeMillis();
         this.beginTime = System.currentTimeMillis();
 
@@ -28,8 +35,12 @@ public class ThroughputStatistics implements Subscriber {
     }
 
     public void onRequest(Request request) {
-        traffic += request.request.getRequestURI().getQuery().getBytes().length;
-        traffic += request.request.getRequestBody().toString().getBytes().length;
+        try {
+            traffic += request.request.getRequestURI().getRawQuery().getBytes().length;
+            traffic += request.request.getRequestBody().toString().getBytes().length;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void onResponse(Response response) {

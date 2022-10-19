@@ -1,6 +1,12 @@
+package subscriber;
+
+import network.Request;
+import network.Response;
+import util.Logger;
+
 import java.util.HashMap;
 
-public class ResponseTimeStatistics implements Subscriber {
+public class ResponseTimeStatistics extends AbstractSubscriber {
 
     public int requestCount = 0;
     public long totalTime = 0;
@@ -8,6 +14,7 @@ public class ResponseTimeStatistics implements Subscriber {
     public long beginTime = 0;
 
     public ResponseTimeStatistics() {
+        Logger.log("ResponseTime", "[0] Started");
         this.requestTimestamps = new HashMap();
         this.beginTime = System.currentTimeMillis();
     }

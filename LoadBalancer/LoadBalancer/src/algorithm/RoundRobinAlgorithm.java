@@ -1,6 +1,12 @@
+package algorithm;
+
+import network.Request;
+import network.Response;
+import network.Worker;
+
 import java.util.List;
 
-public class RoundRobinAlgorithm implements LBAlgorithm {
+public class RoundRobinAlgorithm extends AbstractLBAlgorithm {
     private List<Worker> workers;
     private int index = 0;
 
@@ -8,15 +14,17 @@ public class RoundRobinAlgorithm implements LBAlgorithm {
         this.workers = workers;
     }
 
-    public Worker choose(Request request) {
+    public Worker choose() {
         Worker worker = workers.get(index % workers.size());
         this.index += 1;
         return worker;
     }
 
-    public void onRequest(Worker worker, Request request) {
+    @Override
+    public void onRequest(Request request) {
     }
 
+    @Override
     public void onResponse(Response response) {
 
     }
