@@ -1,3 +1,5 @@
+package network;
+
 import java.net.http.HttpResponse;
 
 public class Response {

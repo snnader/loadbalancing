@@ -28,7 +28,7 @@ public class RequestHandler implements HttpHandler {
             String[] pair = arg.split("=");
             params.put(pair[0], Integer.parseInt(pair[1]));
         }
-        return new Task(params.get("cpu"), params.get("mem"), params.get("io"), params.get("dur"));
+        return new Task(params.get("cpu"), params.get("mem"), params.get("io"));
     }
 
     private void handleResponse(HttpExchange exchange, Task requestTask) throws IOException {
