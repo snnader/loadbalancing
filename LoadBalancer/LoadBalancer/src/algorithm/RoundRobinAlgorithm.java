@@ -14,7 +14,7 @@ public class RoundRobinAlgorithm extends AbstractLBAlgorithm {
         this.workers = workers;
     }
 
-    public Worker choose() {
+    public Worker choose(Request request) {
         Worker worker = workers.get(index % workers.size());
         this.index += 1;
         return worker;

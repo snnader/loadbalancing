@@ -16,7 +16,7 @@ public class RandomAlgorithm extends AbstractLBAlgorithm {
         this.workers = workers;
     }
     @Override
-    public Worker choose() {
+    public Worker choose(Request request) {
         return workers.get(rand.nextInt(workers.size()));
     }
 

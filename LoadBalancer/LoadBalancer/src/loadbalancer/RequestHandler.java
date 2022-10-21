@@ -54,7 +54,7 @@ public class RequestHandler implements HttpHandler {
         }
 
         // Select the worker to handle the request
-        request.worker = algorithm.choose();
+        request.worker = algorithm.choose(request);
         System.out.println("Chosen server: " + request.worker.ip + ":" + request.worker.port);
         String uri = "http://" + request.worker.ip + ":" + request.worker.port + "?" + httpExchange.getRequestURI().getRawQuery();
 

@@ -70,7 +70,7 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
     }
 
     @Override
-    public Worker choose() {
+    public Worker choose(Request request) {
         Worker lowestUsageWorker = workers.get(0);
         Double lowestUsage = Math.max(CPUUsage.get(lowestUsageWorker), MemUsage.get(lowestUsageWorker));
         for (Worker w : workers) {

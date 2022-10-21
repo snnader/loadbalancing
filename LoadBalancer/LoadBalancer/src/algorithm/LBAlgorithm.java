@@ -5,7 +5,7 @@ import network.Request;
 import network.Response;
 
 public interface LBAlgorithm {
-    Worker choose();
+    Worker choose(Request request);
     void onRequest(Request request);
     void onResponse(Response response);
     void onRequestFail(Request request);

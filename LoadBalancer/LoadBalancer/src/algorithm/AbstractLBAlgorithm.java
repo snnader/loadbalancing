@@ -7,7 +7,7 @@ import network.Worker;
 public class AbstractLBAlgorithm implements LBAlgorithm {
 
     @Override
-    public Worker choose() {
+    public Worker choose(Request request) {
         throw new UnsupportedOperationException("Must implement choose() manually");
     }
 
