@@ -51,11 +51,11 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
     public Worker choose() {
         // compute avg time for each worker
         Worker lowestWorker = workers.get(0);
-        double lowestResponseTime = workerRequestMap.get(lowestWorker).size() != 0?
+        double lowestResponseTime = !workerRequestMap.get(lowestWorker).isEmpty()?
                 1.0 * workerResponseTimeMap.get(lowestWorker).calculate() / workerRequestMap.get(lowestWorker).size()
                 : 0;
         for (Worker w : workers) {
-            double responseTime = workerRequestMap.get(w).size() != 0?
+            double responseTime = !workerRequestMap.get(w).isEmpty()?
                     1.0 * workerResponseTimeMap.get(w).calculate() / workerRequestMap.get(w).size()
                     : 0;
 //            System.out.println("Server " + w.ip + " " + w.port + ": " + responseTime + " total: " + workerRequestMap.get(w).size());

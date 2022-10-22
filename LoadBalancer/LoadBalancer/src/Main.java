@@ -16,7 +16,7 @@ public class Main {
         // All worker nodes
         List<Worker> workers = new ArrayList<>();
         workers.add(new Worker("127.0.0.1", "8002"));
-//        workers.add(new Worker("127.0.0.1", "8003"));
+        workers.add(new Worker("127.0.0.1", "8003"));
 //        workers.add(new Worker("127.0.0.1", "8004"));
 
         // Load Balancing Algorithm
