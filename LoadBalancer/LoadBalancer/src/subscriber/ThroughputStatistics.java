@@ -36,15 +36,23 @@ public class ThroughputStatistics extends AbstractSubscriber {
 
     public void onRequest(Request request) {
         try {
-            traffic += request.request.getRequestURI().getRawQuery().getBytes().length;
-            traffic += request.request.getRequestBody().toString().getBytes().length;
+            if (request.request.getRequestURI().getRawQuery() != null) {
+                traffic += request.request.getRequestURI().getRawQuery().getBytes().length;
+            }
+            if (request.request.getRequestBody() != null) {
+                traffic += request.request.getRequestBody().toString().getBytes().length;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public void onResponse(Response response) {
-        traffic += response.response.uri().toString().getBytes().length;
-        traffic += response.response.body().toString().getBytes().length;
+        if (response.response.uri() != null) {
+            traffic += response.response.uri().toString().getBytes().length;
+        }
+        if (response.response.body() != null) {
+            traffic += response.response.body().toString().getBytes().length;
+        }
     }
 }
