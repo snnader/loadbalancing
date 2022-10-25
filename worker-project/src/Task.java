@@ -6,13 +6,14 @@ public class Task {
     public final int mem;
     public final int io;
 
-    private static final int CPU_ITER = 10000000;
-    private static final int MEM_SIZE = 50000;
-    private static final int IO_SIZE = 50000;
+    private static final int CPU_ITER = 10000;
+    private static final int MEM_SIZE = 30000;
+    private static final int NUM_ARRAYS = 500;
+    private static final int IO_SIZE = 30000;
     private static final int NUM_THREADS = 2;
 
     public Task(int cpu, int mem, int io) throws IllegalArgumentException {
-        if (cpu < 1 || cpu > 10 || mem < 1 || mem > 10 || io < 1 || io > 10) {
+        if (cpu < 0 || cpu > 10 || mem < 0 || mem > 10 || io < 0 || io > 10) {
             throw new IllegalArgumentException(
                     "CPU, Mem, and IO should be between 1 and 10"
             );
@@ -48,6 +49,7 @@ public class Task {
     }
 
     private void loadCPU(int level) {
+        if (level == 0) return;
         try {
             for (int i = 0; i < level * CPU_ITER; i++) {
                 if (System.currentTimeMillis() % 100 == 0) {
@@ -60,8 +62,8 @@ public class Task {
     }
 
     private void loadMem(int level) {
-        int num_arrays = 1000;
-        for (int i = 0; i < num_arrays; i++) {
+        if (level == 0) return;
+        for (int i = 0; i < NUM_ARRAYS; i++) {
             byte[] load = new byte[level * MEM_SIZE];
             load[0] = 'a';
             load[load.length-1] = 'z';
@@ -70,15 +72,15 @@ public class Task {
     }
 
     private void loadIO(int level) {
-        int num_files = 100;
-        File[] files = new File[num_files];
+        if (level == 0) return;
+        File[] files = new File[level];
         try {
-            for(int i = 0; i < num_files; i++) {
+            for(int i = 0; i < level; i++) {
                 files[i] = new File(super.toString() + " file " + i);
                 if (files[i].createNewFile()) {
                     try {
                         FileWriter writer = new FileWriter(files[i]);
-                        for (int j = 0; j < level * IO_SIZE/10; j++) {
+                        for (int j = 0; j < IO_SIZE/10; j++) {
                             writer.write("aaaaaaaaaa");
                         }
                         writer.close();
@@ -92,7 +94,7 @@ public class Task {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < num_files; i++) {
+        for (int i = 0; i < level; i++) {
             try {
                 Scanner reader = new Scanner(files[i]);
                 reader.nextLine();
@@ -101,7 +103,7 @@ public class Task {
                 e.printStackTrace();
             }
         }
-        for (int i = 0; i < num_files; i++) {
+        for (int i = 0; i < level; i++) {
             files[i].delete();
         }
     }
