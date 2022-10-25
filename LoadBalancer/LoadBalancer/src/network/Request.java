@@ -16,4 +16,13 @@ public class Request {
         this.uuid = uuid;
         this.request = request;
     }
+
+    public int getLoad() {
+        String[] args = request.getRequestURI().toString().split("\\?")[1].split("&");
+        int load = 0;
+        for (String arg : args) {
+            load += Integer.parseInt(arg.split("=")[1]);
+        }
+        return load;
+    }
 }
