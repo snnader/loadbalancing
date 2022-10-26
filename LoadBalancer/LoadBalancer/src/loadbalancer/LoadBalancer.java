@@ -23,7 +23,7 @@ public class LoadBalancer {
     public void start() {
         System.out.println("Load Balancer Started");
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
+            HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", 8001), 0);
             server.createContext("/", new RequestHandler(this.subscribers, this.algorithm));
             ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
             server.setExecutor(threadPoolExecutor);
