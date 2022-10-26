@@ -72,7 +72,6 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
         for (Worker worker : workers) {
             if(timeNotUsed.get(worker) > 3 * workers.size()){
                 chooseWorker = worker;
-                collection.put(worker, minimumConnection);
             }
         }
         for (Worker worker : workers) {
