@@ -49,7 +49,7 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
             }
             
         }
-        System.out.println("temp1 size"+temp1.size());
+        System.out.println(temp1);
         for (Worker worker : workers) {
             System.out.println(worker.ip + ":" + collection.get(worker));
             System.out.println(timeNotUsed.get(worker));
@@ -68,6 +68,11 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
             chooseWorker = temp2.get(random.nextInt(temp2.size()));
         }else{
             chooseWorker = temp1.get(0);
+        }
+        for (Worker worker : workers) {
+            if(timeNotUsed.get(worker) > 3 * workers.size()){
+                chooseWorker = worker;
+            }
         }
         for (Worker worker : workers) {
             if (worker != chooseWorker) {
@@ -89,5 +94,10 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
     @Override
     public void onResponse(Response response){
         collection.put(response.worker, collection.get(response.worker) - 1);
+    }
+
+    @Override
+    public void onRequestFail(Request request){
+        collection.put(request.worker, collection.get(request.worker) - 1);
     }
 }
