@@ -1,11 +1,15 @@
 package algorithm;
 
+import network.Request;
+import network.Response;
+import network.Worker;
+
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class ConsistentHashAlgorithm implements LBAlgorithm{
+public class ConsistentHashAlgorithm extends AbstractLBAlgorithm {
 
   // FNVI_32_HASH Algorithm
   private static final long FNV_32_INIT = 2166136261L;
@@ -69,15 +73,14 @@ public class ConsistentHashAlgorithm implements LBAlgorithm{
   }
 
   @Override
-  public void onRequest(Worker worker, Request request) {
+  public void onRequest(Request request) {
     
     
   }
 
   @Override
   public void onResponse(Response response) {
-    
-    
+
   }
 
 }
