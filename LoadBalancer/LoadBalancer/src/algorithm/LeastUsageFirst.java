@@ -36,8 +36,8 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
         for (Worker w: workers) {
             CPUUsage.put(w, 0.0);
             MemUsage.put(w, 0.0);
-            CPUUsagePerRequest.put(w, 0.0);
-            MemUsagePerRequest.put(w, 0.0);
+            CPUUsagePerRequest.put(w, 0.1);
+            MemUsagePerRequest.put(w, 0.1);
             workerRequestCnt.put(w, 0);
         }
 
