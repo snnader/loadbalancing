@@ -88,16 +88,22 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
 
     @Override
     public void onRequest(Request request){
+        lock.lock();
         collection.put(request.worker, collection.get(request.worker) + 1);
+        lock.unlock();
     }
 
     @Override
     public void onResponse(Response response){
+        lock.lock();
         collection.put(response.worker, collection.get(response.worker) - 1);
+        lock.unlock();
     }
 
     @Override
     public void onRequestFail(Request request){
+        lock.lock();
         collection.put(request.worker, collection.get(request.worker) - 1);
+        lock.unlock();
     }
 }
