@@ -34,21 +34,38 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
     private HashMap<String, Timestamp> requestTimestampMap;
     private HashMap<Worker, Deque<String>> workerRequestMap;
     private HashMap<Worker, ResponseTime> workerResponseTimeMap;
-    private static Integer windowSize = 1000;
+    private Integer windowSize;
+    private Integer count;
+    private boolean coldstart;
+    private HashMap<Worker, Integer> workerTotalMap;
 
     public LeastAvgResponseTimeAlgo(List<Worker> workers) {
         this.workers = workers;
+        windowSize = 50;
+        count = 0;
+        coldstart = true;
         requestTimestampMap = new HashMap<>();
         workerRequestMap = new HashMap<>();
         workerResponseTimeMap = new HashMap<>();
+        workerTotalMap = new HashMap<>();
         workers.forEach(t -> {
             workerRequestMap.put(t, new ArrayDeque<>());
             workerResponseTimeMap.put(t, new ResponseTime());
+            workerTotalMap.put(t, 0);
         });
     }
 
     @Override
-    public Worker choose() {
+    public Worker choose(Request request) {
+        if (coldstart) {
+            Worker worker = workers.get(count % workers.size());
+            count += 1;
+            if (count >= windowSize * workers.size() * 2) {
+                coldstart = false;
+            }
+            workerTotalMap.put(worker, workerTotalMap.get(worker)+1);
+            return worker;
+        }
         // compute avg time for each worker
         Worker lowestWorker = workers.get(0);
         double lowestResponseTime = !workerRequestMap.get(lowestWorker).isEmpty()?
@@ -58,12 +75,13 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
             double responseTime = !workerRequestMap.get(w).isEmpty()?
                     1.0 * workerResponseTimeMap.get(w).calculate() / workerRequestMap.get(w).size()
                     : 0;
-//            System.out.println("Server " + w.ip + " " + w.port + ": " + responseTime + " total: " + workerRequestMap.get(w).size());
+            System.out.println("Server " + w.ip + " " + w.port + ": " + responseTime + " total: " + workerTotalMap.get(w));
             if (responseTime < lowestResponseTime) {
                 lowestWorker = w;
                 lowestResponseTime = responseTime;
             }
         }
+        workerTotalMap.put(lowestWorker, workerTotalMap.get(lowestWorker)+1);
         return lowestWorker;
     }
 
