@@ -7,45 +7,41 @@ import network.Worker;
 import java.util.*;
 
 public class EstimatedFinishTime extends AbstractLBAlgorithm {
-    private final PriorityQueue<TimeWorkerPair> finishTimePQ;
+    private final Worker[] workers;
+    private final double[] finishTime;
+    private final double[] capacity;
 
     public EstimatedFinishTime(List<Worker> workers) {
-        this.finishTimePQ = new PriorityQueue<>(workers.size(), Comparator.comparingInt(o -> o.finishTime));
-        for (Worker worker : workers) {
-            this.finishTimePQ.add(new TimeWorkerPair(worker));
+        this.workers = new Worker[workers.size()];
+        this.finishTime = new double[workers.size()];
+        this.capacity = new double[workers.size()];
+        for (int i = 0; i < workers.size(); i++) {
+            this.workers[i] = workers.get(i);
+            this.finishTime[i] = 0;
+            this.capacity[i] = this.workers[i].capacity;
         }
     }
 
     @Override
     public Worker choose(Request request) {
         int requestLoad = request.getLoad();
-        TimeWorkerPair selected = updateFinishTime(requestLoad);
-        // reduce estimated finish times of all workers by the same amount to prevent overflow
-        if (selected.finishTime > 2000000000) {
-            for (TimeWorkerPair pair : this.finishTimePQ) {
-                pair.finishTime -= selected.finishTime;
+        return this.workers[findMinFinishTime(requestLoad)];
+    }
+
+    private synchronized int findMinFinishTime(double requestLoad) {
+        // find worker with the least finish time
+        int index = 0;
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < workers.length; i++) {
+            double estimatedFinishTime = this.finishTime[i] + requestLoad / this.capacity[i];
+            if (estimatedFinishTime < min) {
+                index = i;
+                min = estimatedFinishTime;
             }
         }
-        return selected.worker;
-    }
-
-    private synchronized TimeWorkerPair updateFinishTime(int load) {
-        // select worker with the least finish time and remove it from queue
-        TimeWorkerPair selected = this.finishTimePQ.remove();
-        // update its finish time and re-add it to the queue
-        selected.finishTime += load;
-        this.finishTimePQ.add(selected);
-        return selected;
-    }
-
-    private static class TimeWorkerPair {
-        public int finishTime;
-        public Worker worker;
-
-        public TimeWorkerPair(Worker worker) {
-            this.finishTime = 0;
-            this.worker = worker;
-        }
+        // update its finish time
+        this.finishTime[index] += requestLoad / this.capacity[index];
+        return index;
     }
 
     @Override
