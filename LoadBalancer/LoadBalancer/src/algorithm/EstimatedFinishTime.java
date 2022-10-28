@@ -49,6 +49,11 @@ public class EstimatedFinishTime extends AbstractLBAlgorithm {
     }
 
     @Override
+    public void onRequest(Request request) {
+
+    }
+
+    @Override
     public void onResponse(Response response) {
 
     }
