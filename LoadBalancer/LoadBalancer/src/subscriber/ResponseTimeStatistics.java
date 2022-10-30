@@ -21,12 +21,12 @@ public class ResponseTimeStatistics extends AbstractSubscriber {
 
     public synchronized void onRequest(Request request) {
         this.requestCount += 1;
-        System.out.println("received request " + request.uuid);
+//        System.out.println("received request " + request.uuid);
         requestTimestamps.put(request.uuid, System.currentTimeMillis());
     }
 
     public synchronized void onResponse(Response response) {
-        System.out.println("received response " + response.uuid);
+//        System.out.println("received response " + response.uuid);
 
         Long requestTime = requestTimestamps.get(response.uuid);
         Long responseTime = System.currentTimeMillis();
