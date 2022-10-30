@@ -57,8 +57,11 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
                                     double memUsage = Double.valueOf(body.split(",")[1].substring(0, 5));
                                     System.out.println("[" + w.ip + "]" + " CPU: " + cpuUsage + " MEM: " + memUsage);
                                     CPUUsage.put(w, cpuUsage);
-                                    CPUUsagePerRequest.put(w, cpuUsage / workerRequestCnt.get(w));
-                                    MemUsagePerRequest.put(w, memUsage / workerRequestCnt.get(w));
+                                    MemUsage.put(w, memUsage);
+                                    if (workerRequestCnt.get(w) != 0) {
+                                        CPUUsagePerRequest.put(w, cpuUsage / workerRequestCnt.get(w));
+                                        MemUsagePerRequest.put(w, memUsage / workerRequestCnt.get(w));
+                                    }
                                 });
                     }
                 } catch (Exception e) {
@@ -73,6 +76,7 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
         Worker lowestUsageWorker = workers.get(0);
         Double lowestUsage = Math.max(CPUUsage.get(lowestUsageWorker), MemUsage.get(lowestUsageWorker));
         for (Worker w : workers) {
+//            System.out.println(w.ip + " CPU " + CPUUsage.get(w) + " MEM " + MemUsage.get(w) + " " + CPUUsagePerRequest.get(w) + " " + MemUsage.get(w));
             if (Math.max(CPUUsage.get(w), MemUsage.get(w)) < lowestUsage) {
                 lowestUsageWorker = w;
                 lowestUsage = Math.max(CPUUsage.get(w), MemUsage.get(w));
