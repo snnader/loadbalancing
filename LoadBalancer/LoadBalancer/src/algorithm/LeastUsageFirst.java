@@ -8,7 +8,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -84,7 +83,7 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
     }
 
     @Override
-    public void onRequest(Request request) {
+    public synchronized void onRequest(Request request) {
             Worker worker = request.worker;
         try {
             workerRequestCnt.put(worker, workerRequestCnt.getOrDefault(worker, 0) + 1);
@@ -96,7 +95,7 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
     }
 
     @Override
-    public void onResponse(Response response) {
+    public synchronized void onResponse(Response response) {
         Worker worker = response.worker;
         workerRequestCnt.put(worker, workerRequestCnt.get(worker) - 1);
         CPUUsage.put(worker, CPUUsage.get(worker) - CPUUsagePerRequest.get(worker));
@@ -104,7 +103,7 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
     }
 
     @Override
-    public void onRequestFail(Request request) {
+    public synchronized void onRequestFail(Request request) {
         Worker worker = request.worker;
         workerRequestCnt.put(worker, workerRequestCnt.get(worker) - 1);
         CPUUsage.put(worker, CPUUsage.get(worker) - CPUUsagePerRequest.get(worker));

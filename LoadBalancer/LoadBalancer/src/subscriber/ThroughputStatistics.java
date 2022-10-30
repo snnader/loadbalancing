@@ -34,7 +34,7 @@ public class ThroughputStatistics extends AbstractSubscriber {
         }, 0, 1, TimeUnit.SECONDS);
     }
 
-    public void onRequest(Request request) {
+    public synchronized void onRequest(Request request) {
         try {
             if (request.request.getRequestURI().getRawQuery() != null) {
                 traffic += request.request.getRequestURI().getRawQuery().getBytes().length;
@@ -47,7 +47,7 @@ public class ThroughputStatistics extends AbstractSubscriber {
         }
     }
 
-    public void onResponse(Response response) {
+    public synchronized void onResponse(Response response) {
         if (response.response.uri() != null) {
             traffic += response.response.uri().toString().getBytes().length;
         }
