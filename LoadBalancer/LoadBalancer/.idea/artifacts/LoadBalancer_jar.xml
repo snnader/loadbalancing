@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="LoadBalancer:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/LoadBalancer_jar</output-path>
-    <root id="archive" name="LoadBalancer.jar">
-      <element id="module-output" name="LoadBalancer" />
-    </root>
-  </artifact>
-</component>
