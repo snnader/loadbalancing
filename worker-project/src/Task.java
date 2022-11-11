@@ -6,14 +6,14 @@ public class Task {
     public final int mem;
     public final int io;
 
-    private static final int CPU_ITER = 10000;
-    private static final int MEM_SIZE = 30000;
+    private static final int NUM_THREADS = 2; // number of threads used for load cpu task
+    private static final int CPU_ITER = 20000; // * level for loop iterations run on (NUM_THREADS) threads
     private static final int NUM_ARRAYS = 500;
-    private static final int IO_SIZE = 30000;
-    private static final int NUM_THREADS = 2;
+    private static final int MEM_SIZE = 60000; // * level bytes allocated (NUM_ARRAYS) times
+    private static final int IO_SIZE = 60000; // bytes written into (level) files in 10-byte steps
 
     public Task(int cpu, int mem, int io) throws IllegalArgumentException {
-        if (cpu < 0 || cpu > 10 || mem < 0 || mem > 10 || io < 0 || io > 10) {
+        if (cpu < 1 || cpu > 10 || mem < 1 || mem > 10 || io < 1 || io > 10) {
             throw new IllegalArgumentException(
                     "CPU, Mem, and IO should be between 1 and 10"
             );
@@ -49,7 +49,6 @@ public class Task {
     }
 
     private void loadCPU(int level) {
-        if (level == 0) return;
         try {
             for (int i = 0; i < level * CPU_ITER; i++) {
                 if (System.currentTimeMillis() % 100 == 0) {
@@ -62,7 +61,6 @@ public class Task {
     }
 
     private void loadMem(int level) {
-        if (level == 0) return;
         for (int i = 0; i < NUM_ARRAYS; i++) {
             byte[] load = new byte[level * MEM_SIZE];
             load[0] = 'a';
@@ -72,7 +70,6 @@ public class Task {
     }
 
     private void loadIO(int level) {
-        if (level == 0) return;
         File[] files = new File[level];
         try {
             for(int i = 0; i < level; i++) {
