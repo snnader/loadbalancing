@@ -33,29 +33,18 @@ public class Main {
         LBAlgorithm algorithm = null;
         while (algorithm == null) {
             switch (algoName) {
-                case "least usage":
-                    algorithm = new LeastUsageFirst(workers);
-                    break;
-                case "least connection":
-                    algorithm = new LeastRecentlyUsed_LeastConnection(workers);
-                    break;
-                case "response time":
-                    algorithm = new LeastAvgResponseTimeAlgo(workers);
-                    break;
-                case "consistent hashing":
-                    algorithm = new ConsistentHashAlgorithm(workers);
-                    break;
-                case "finish time":
-                    algorithm = new EstimatedFinishTime(workers);
-                    break;
-                case "round robin":
-                    algorithm = new RoundRobinAlgorithm(workers);
-                    break;
-                case "random":
-                    algorithm = new RandomAlgorithm(workers);
-                    break;
-                default:
+                case "least usage", "1" -> algorithm = new LeastUsageFirst(workers);
+                case "least connection", "2" -> algorithm = new LeastRecentlyUsed_LeastConnection(workers);
+                case "response time", "3" -> algorithm = new LeastAvgResponseTimeAlgo(workers);
+                case "consistent hashing", "4" -> algorithm = new ConsistentHashAlgorithm(workers);
+                case "finish time", "5" -> algorithm = new EstimatedFinishTime(workers);
+                case "round robin", "6" -> algorithm = new RoundRobinAlgorithm(workers);
+                case "random", "7" -> algorithm = new RandomAlgorithm(workers);
+                default -> {
+                    System.out.println(" 1 least usage\n 2 least connection\n 3 response time\n 4 consistent hashing\n 5 finish time\n 6 round robin\n 7 random\n");
+                    System.out.println("LB algorithm: ");
                     algoName = scanner.nextLine();
+                }
             }
         }
 
