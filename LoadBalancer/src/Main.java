@@ -5,6 +5,7 @@ import subscriber.FailureRateStatistics;
 import subscriber.ResponseTimeStatistics;
 import subscriber.Subscriber;
 import subscriber.ThroughputStatistics;
+import util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class Main {
                 }
             }
         }
+
+        Logger.setAlgorithmName(algoName);
 
         List<Subscriber> subscribers = new ArrayList<>();
         subscribers.add(new ResponseTimeStatistics());
