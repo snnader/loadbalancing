@@ -16,16 +16,16 @@ public class Main {
 
         // All worker nodes
         List<Worker> workers = new ArrayList<>(10);
-        workers.add(new Worker("172.31.17.150", "8001", 4.8));
-        workers.add(new Worker("172.31.18.180", "8001", 4.8));
-        workers.add(new Worker("172.31.14.254", "8001", 4.8));
         workers.add(new Worker("172.31.5.174", "8001", 4.8));
         workers.add(new Worker("172.31.15.101", "8001", 4.8));
         workers.add(new Worker("172.31.12.170", "8001", 4.8));
-        workers.add(new Worker("172.31.0.255", "8001", 4.8*2));
-        workers.add(new Worker("172.31.6.95", "8001", 4.8*2));
-        workers.add(new Worker("172.31.11.132", "8001", 4.8*2));
-        workers.add(new Worker("172.31.2.68", "8001", 4.8*2));
+        workers.add(new Worker("172.31.0.255", "8001", 9.6));
+        workers.add(new Worker("172.31.6.95", "8001", 9.6));
+        workers.add(new Worker("172.31.11.132", "8001", 9.6));
+        workers.add(new Worker("172.31.2.68", "8001", 9.6));
+        workers.add(new Worker("172.31.24.41", "8001", 4.8));
+        workers.add(new Worker("172.31.18.105", "8001", 4.8));
+        workers.add(new Worker("172.31.27.142", "8001", 4.8));
 
         // Load Balancing Algorithm
         Scanner scanner = new Scanner(System.in);
