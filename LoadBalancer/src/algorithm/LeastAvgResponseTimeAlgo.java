@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
 
+    private String name = "LeastResponseTime";
+
     class Timestamp {
         public long requestTimestamp;
         public long responseTimestamp;
@@ -53,6 +55,11 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
             workerResponseTimeMap.put(t, new ResponseTime());
             workerTotalMap.put(t, 0);
         });
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

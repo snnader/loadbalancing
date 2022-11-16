@@ -7,6 +7,9 @@ import network.Worker;
 import java.util.*;
 
 public class EstimatedFinishTime extends AbstractLBAlgorithm {
+
+    private String name = "EstimatedFinishTime";
+
     private final Worker[] workers;
     private final double[] finishTime;
     private final double[] capacity;
@@ -20,6 +23,11 @@ public class EstimatedFinishTime extends AbstractLBAlgorithm {
             this.finishTime[i] = 0;
             this.capacity[i] = this.workers[i].capacity;
         }
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

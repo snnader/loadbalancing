@@ -9,12 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomAlgorithm extends AbstractLBAlgorithm {
+
+    private String name = "Random";
     private List<Worker> workers;
     private Random rand = new Random();
 
     public RandomAlgorithm(List<Worker> workers) {
         this.workers = workers;
     }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public Worker choose(Request request) {
         return workers.get(rand.nextInt(workers.size()));

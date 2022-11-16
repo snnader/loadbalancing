@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LeastUsageFirst extends AbstractLBAlgorithm {
 
+    private String name = "LeastUsage";
     private List<Worker> workers;
     private HashMap<Worker, Integer> workerRequestCnt;
     private HashMap<Worker, Double> CPUUsage;
@@ -69,6 +70,12 @@ public class LeastUsageFirst extends AbstractLBAlgorithm {
                 }
             }
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

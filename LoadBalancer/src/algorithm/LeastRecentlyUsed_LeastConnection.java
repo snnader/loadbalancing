@@ -9,6 +9,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
+
+    private String name = "LeastRecentlyUsed";
     private List<Worker> workers;
     private List<Worker> temp1;
     private List<Worker> temp2;
@@ -35,6 +37,12 @@ public class LeastRecentlyUsed_LeastConnection extends AbstractLBAlgorithm {
         }
         
     }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public Worker choose(Request request){
         lock.lock();

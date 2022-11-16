@@ -7,11 +7,18 @@ import network.Worker;
 import java.util.List;
 
 public class RoundRobinAlgorithm extends AbstractLBAlgorithm {
+
+    private String name = "RoundRobin";
     private List<Worker> workers;
     private int index = 0;
 
     public RoundRobinAlgorithm(List<Worker> workers) {
         this.workers = workers;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     public Worker choose(Request request) {

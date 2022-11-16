@@ -11,6 +11,8 @@ import java.util.TreeMap;
 
 public class ConsistentHashAlgorithm extends AbstractLBAlgorithm {
 
+  private String name = "ConsistentHash";
+
   // FNVI_32_HASH Algorithm
   private static final long FNV_32_INIT = 2166136261L;
   private static final int FNV_32_PRIME = 16777619;
@@ -60,6 +62,11 @@ public class ConsistentHashAlgorithm extends AbstractLBAlgorithm {
   public void delServer(Worker worker) {
     int hash = getHashCode(worker.port);
     treeMapHash.remove(hash);
+  }
+
+  @Override
+  public String getName() {
+    return this.name;
   }
 
   @Override
