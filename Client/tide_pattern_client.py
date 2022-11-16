@@ -2,38 +2,38 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from scipy.stats import norm
+import matplotlib.pyplot as plt
+from request_gen import generate_requests
 
-import grequests
-
-
-def pattern(count):
-    ## requests = [grequests.get('http://127.0.0.1:8001', params={'cpu': '5', 'io': '5', 'dur': '2'}) for i in range(count)]
-    requests = [grequests.get("url") for i in range(count)]
-    responses = grequests.map(requests)
-    print(responses)
-
-
-def start():
+def start(cpu=(1,10), mem=(1,10), io=(1,10)):
+    quantum = 0.5
     seconds = 60
-    i = 0
-    pool = ThreadPoolExecutor(max_workers=seconds)
+    peak_freq = 25
+    pool = ThreadPoolExecutor(max_workers=int(seconds/quantum))
     thread_list = []
     gaussion_scale = 7.5
-    x = np.arange(0, 60, 1)
-    arr = (norm.pdf(x, loc=20, scale=gaussion_scale) + norm.pdf(x, loc=40, scale=gaussion_scale)) * 350
-    while i < seconds:
-        thread_list.append(pool.submit(pattern, int(arr[i])))
-        print(f'thread {i + 1} started')
-        time.sleep(1)
-        i += 1
+    x = np.arange(0, seconds, quantum)
+    arr = (norm.pdf(x, loc=20, scale=gaussion_scale) + norm.pdf(x, loc=40, scale=gaussion_scale)) * 18.25 * peak_freq
+    print(arr)
+
+    # plt.plot(x, arr)
+    # plt.show()
+    # return
+
+    for i in range(int(seconds/quantum)):
+        thread_list.append(pool.submit(generate_requests, int(arr[i]) + 1, cpu, mem, io))
+        print(f'thread {i+1} started')
+        time.sleep(quantum)
+
     while True:
         is_done = True
-        for i in range(seconds):
+        for i in range(int(seconds/quantum)):
             if not thread_list[i].done():
                 is_done = False
         if is_done:
             print("done")
             break
+        else: time.sleep(1)
     pool.shutdown()
 
 
