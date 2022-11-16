@@ -10,6 +10,8 @@ public class ResponseTimeStatistics extends AbstractSubscriber {
 
     public int requestCount = 0;
     public long totalTime = 0;
+    public long minTime = Long.MAX_VALUE;
+    public long maxTime = -1;
     public HashMap<String, Long> requestTimestamps;
     public long beginTime = 0;
 
@@ -31,9 +33,21 @@ public class ResponseTimeStatistics extends AbstractSubscriber {
         Long requestTime = requestTimestamps.get(response.uuid);
         Long responseTime = System.currentTimeMillis();
         totalTime += responseTime - requestTime;
+        this.minTime = Math.min(this.minTime, responseTime - requestTime);
+        this.maxTime = Math.max(this.maxTime, responseTime - requestTime);
         this.requestTimestamps.remove(response.uuid);
 
-        String info = "[" + ((System.currentTimeMillis()-beginTime)/1000) + "] " + "total " + totalTime + "ms avg: " + totalTime / requestCount + " ms";
+        String info = "[" + ((System.currentTimeMillis()-beginTime)/1000) + "]"
+                + " total " + totalTime + "ms"
+                + " avg: " + totalTime / requestCount
+                + " min: " + this.minTime
+                + " max: " + this.maxTime;
         Logger.log("ResponseTime", info);
+    }
+
+    @Override
+    public synchronized void onRequestFail(Request request) {
+        this.requestCount -= 1;
+        requestTimestamps.remove(request.uuid);
     }
 }
