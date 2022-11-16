@@ -21,7 +21,7 @@ public class LoadBalancer {
     }
 
     public void start() {
-        System.out.println("Load Balancer Started");
+        System.out.println(this.algorithm.getName() + " Load Balancer Started");
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", 8001), 0);
             server.createContext("/", new RequestHandler(this.subscribers, this.algorithm));

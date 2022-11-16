@@ -16,18 +16,14 @@ public class Main {
 
         // All worker nodes
         List<Worker> workers = new ArrayList<>(10);
-//        workers.add(new Worker("172.31.5.174", "8001", 4.8));
-//        workers.add(new Worker("172.31.15.101", "8001", 4.8));
-//        workers.add(new Worker("172.31.12.170", "8001", 4.8));
-//        workers.add(new Worker("172.31.0.255", "8001", 9.6));
-//        workers.add(new Worker("172.31.6.95", "8001", 9.6));
-//        workers.add(new Worker("172.31.11.132", "8001", 9.6));
-//        workers.add(new Worker("172.31.2.68", "8001", 9.6));
-//        workers.add(new Worker("172.31.24.41", "8001", 4.8));
-//        workers.add(new Worker("172.31.18.105", "8001", 4.8));
-//        workers.add(new Worker("172.31.27.142", "8001", 4.8));
-        workers.add(new Worker("127.0.0.1", "8002", 4.8));
-        workers.add(new Worker("127.0.0.1", "8003", 4.8));
+        workers.add(new Worker("172.31.5.174", "8001", 4.8)); // 4
+        workers.add(new Worker("172.31.15.101", "8001", 4.8)); // 5
+        workers.add(new Worker("172.31.12.170", "8001", 4.8)); // 6
+        workers.add(new Worker("172.31.0.255", "8001", 9.6)); // 7
+        workers.add(new Worker("172.31.6.95", "8001", 9.6)); // 8
+        workers.add(new Worker("172.31.24.41", "8001", 4.8)); // 11
+        workers.add(new Worker("172.31.18.105", "8001", 4.8)); // 12
+        workers.add(new Worker("172.31.27.142", "8001", 4.8)); // 13
 
         // Load Balancing Algorithm
         Scanner scanner = new Scanner(System.in);
