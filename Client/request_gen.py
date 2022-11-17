@@ -3,7 +3,7 @@ import grequests
 
 rand = Random()
 
-LoadBalancerIP = '127.0.0.1'
+LoadBalancerIP = '52.41.29.122'
 
 def generate_requests(count, cpu, mem, io):
     requests = [
@@ -17,5 +17,5 @@ def generate_requests(count, cpu, mem, io):
         ) 
         for _ in range(count)
     ]
-    grequests.map(requests)
+    grequests.map(requests, gtimeout=10)
     print(count)

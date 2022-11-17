@@ -5,17 +5,16 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 from request_gen import generate_requests
 
-def start(cpu=(1,10), mem=(1,10), io=(1,10)):
+def start(peak_freq=55, cpu=(1,10), mem=(1,10), io=(1,10)):
     quantum = 0.5
     seconds = 60
-    peak_freq = 25
     pool = ThreadPoolExecutor(max_workers=int(seconds/quantum))
     thread_list = []
     gaussion_scale = 7.5
     x = np.arange(0, seconds, quantum)
-    arr = (norm.pdf(x, loc=20, scale=gaussion_scale) + norm.pdf(x, loc=40, scale=gaussion_scale)) * 18.25 * peak_freq
-    print(arr)
+    arr = (norm.pdf(x, loc=20, scale=gaussion_scale) + norm.pdf(x, loc=40, scale=gaussion_scale)) * 18.25 * int(peak_freq * quantum)
 
+    # print(arr)
     # plt.plot(x, arr)
     # plt.show()
     # return

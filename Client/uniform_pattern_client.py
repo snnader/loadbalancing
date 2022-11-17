@@ -2,18 +2,17 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from request_gen import generate_requests
 
-def start(cpu=(1,10), mem=(1,10), io=(1,10)):
+def start(freq=40, cpu=(1,10), mem=(1,10), io=(1,10)):
     quantum = 0.5
     seconds = 60
-    freq = 20 #try 25
     pool = ThreadPoolExecutor(max_workers=int(seconds/quantum))
     thread_list = []
 
-    # print("Uniform with frequency ", freq)
+    # print("Uniform frequency:", freq)
     # return
 
     for i in range(int(seconds/quantum)):
-        thread_list.append(pool.submit(generate_requests, freq, cpu, mem, io))
+        thread_list.append(pool.submit(generate_requests, int(freq * quantum), cpu, mem, io))
         print(f'thread {i+1} started')
         time.sleep(quantum)
 

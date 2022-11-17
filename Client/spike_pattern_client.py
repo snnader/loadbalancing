@@ -5,16 +5,15 @@ from scipy.stats import chi2
 import matplotlib.pyplot as plt
 from request_gen import generate_requests
 
-def start(cpu=(1,10), mem=(1,10), io=(1,10)):
+def start(peak_freq=70, cpu=(1,10), mem=(1,10), io=(1,10)):
     quantum = 0.5
     seconds = 60
-    peak_freq = 50 #try again
     pool = ThreadPoolExecutor(max_workers=int(seconds/quantum))
     thread_list = []
     time_arr = np.arange(0,seconds,quantum)
-    chi2_freq = (chi2.pdf(time_arr, df=14) + 0.01) * 11.074 * peak_freq
-    print(chi2_freq)
+    chi2_freq = (chi2.pdf(time_arr, df=14) + 0.01) * 11.074 * int(peak_freq * quantum)
 
+    # print(chi2_freq)
     # plt.plot(time_arr, chi2_freq)
     # plt.show()
     # return
