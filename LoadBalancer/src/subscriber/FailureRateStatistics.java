@@ -21,17 +21,30 @@ public class FailureRateStatistics extends AbstractSubscriber {
     @Override
     public synchronized void onRequest(Request request) {
         totalRequest += 1;
-        Logger.log("FailureRate", "[" + ((System.currentTimeMillis()-beginTime)/1000) + "] requests: " + totalRequest + " responses: " + totalResponse);
+        String info = "[" + ((System.currentTimeMillis()-beginTime)/1000) + "]"
+                + " requests: " + totalRequest
+                + " responses: " + totalResponse
+                + " failed: " + failed;
+        Logger.log("FailureRate", info);
     }
 
     @Override
     public synchronized void onResponse(Response response) {
         totalResponse += 1;
-        Logger.log("FailureRate", "[" + ((System.currentTimeMillis()-beginTime)/1000) + "] requests: " + totalRequest + " responses: " + totalResponse);
+        String info = "[" + ((System.currentTimeMillis()-beginTime)/1000) + "]"
+                + " requests: " + totalRequest
+                + " responses: " + totalResponse
+                + " failed: " + failed;
+        Logger.log("FailureRate", info);
     }
 
     @Override
     public synchronized void onRequestFail(Request request) {
         failed += 1;
+        String info = "[" + ((System.currentTimeMillis()-beginTime)/1000) + "]"
+                + " requests: " + totalRequest
+                + " responses: " + totalResponse
+                + " failed: " + failed;
+        Logger.log("FailureRate", info);
     }
 }
