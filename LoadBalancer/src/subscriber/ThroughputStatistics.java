@@ -26,8 +26,7 @@ public class ThroughputStatistics extends AbstractSubscriber {
                     double currentThroughput = 1000.0 * traffic / (currentTime - startTime);
                     String info = "[" + ((currentTime - beginTime) / 1000) + "] "
                             + (String.valueOf(currentThroughput)) + " B/s"
-                            + " avg " + String.valueOf(1000.0 * totalTraffic / (currentTime - beginTime));
-                    System.out.println(info);
+                            + " avg " + String.format("%.1f", 1000.0 * totalTraffic / (currentTime - beginTime)) + " B/s";
                     Logger.log("Throughput", info);
                     // Reset time and traffic
                     traffic = 0;
