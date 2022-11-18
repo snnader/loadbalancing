@@ -67,7 +67,7 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
         if (coldstart) {
             Worker worker = workers.get(count % workers.size());
             count += 1;
-            if (count >= windowSize * workers.size() * 2) {
+            if (count >= windowSize * workers.size() * this.workers.size() * 2) {
                 coldstart = false;
             }
             workerTotalMap.put(worker, workerTotalMap.get(worker)+1);
