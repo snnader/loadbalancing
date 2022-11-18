@@ -78,10 +78,14 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
         double lowestResponseTime = !workerRequestMap.get(lowestWorker).isEmpty()?
                 1.0 * workerResponseTimeMap.get(lowestWorker).calculate() / workerRequestMap.get(lowestWorker).size()
                 : 0;
+
         for (Worker w : workers) {
-            double responseTime = !workerRequestMap.get(w).isEmpty()?
-                    1.0 * workerResponseTimeMap.get(w).calculate() / workerRequestMap.get(w).size()
-                    : 0;
+//            double responseTime = !workerRequestMap.get(w).isEmpty()?
+//                    1.0 * workerResponseTimeMap.get(w).calculate() / workerRequestMap.get(w).size()
+//                    : 0;
+
+            double responseTime = 1.0 * workerResponseTimeMap.get(w).calculate() / workerRequestMap.get(w).size();
+            System.out.println("Server " + w.ip + " " + w.port + ": " + workerResponseTimeMap.get(w).calculate() + " " + workerRequestMap.get(w).size());
             System.out.println("Server " + w.ip + " " + w.port + ": " + responseTime + " total: " + workerTotalMap.get(w));
             if (responseTime < lowestResponseTime) {
                 lowestWorker = w;
@@ -125,7 +129,13 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
         responseTime.responseTimestampSum += System.currentTimeMillis();
         responseTime.unrespondedCnt -= 1;
     }
-//    @Override public synchronized void onRequestFail(Request request) {
-//
-//    }
+
+    @Override
+    public synchronized void onRequestFail(Request request) {
+//        requestTimestampMap.get(request.uuid).responseTimestamp = System.currentTimeMillis();
+//        responseTime.get(request.worker) -= requestTimestampMap.get(request.uuid).requestTimestamp;
+//        ResponseTime responseTime = workerResponseTimeMap.get(request.worker);
+//        responseTime.responseTimestampSum += System.currentTimeMillis();
+//        responseTime.unrespondedCnt -= 1;
+    }
 }
