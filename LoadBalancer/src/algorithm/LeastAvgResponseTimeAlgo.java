@@ -63,7 +63,7 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
     }
 
     @Override
-    public Worker choose(Request request) {
+    public synchronized Worker choose(Request request) {
         if (coldstart) {
             Worker worker = workers.get(count % workers.size());
             count += 1;
@@ -93,7 +93,7 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
     }
 
     @Override
-    public void onRequest(Request request) {
+    public synchronized void onRequest(Request request) {
         // if the number of requests surpass the window size
         Worker worker = request.worker;
         requestTimestampMap.put(request.uuid, new Timestamp(System.currentTimeMillis(), 0));
@@ -119,10 +119,13 @@ public class LeastAvgResponseTimeAlgo extends AbstractLBAlgorithm {
     }
 
     @Override
-    public void onResponse(Response response) {
+    public synchronized void onResponse(Response response) {
         requestTimestampMap.get(response.uuid).responseTimestamp = System.currentTimeMillis();
         ResponseTime responseTime = workerResponseTimeMap.get(response.worker);
         responseTime.responseTimestampSum += System.currentTimeMillis();
         responseTime.unrespondedCnt -= 1;
     }
+//    @Override public synchronized void onRequestFail(Request request) {
+//
+//    }
 }
