@@ -55,12 +55,12 @@ public class ConsistentHashAlgorithm extends AbstractLBAlgorithm {
   }
 
   public void addServer(Worker worker) {
-    int hash = getHashCode(worker.port);
+    int hash = getHashCode(worker.ip + worker.port);
     treeMapHash.put(hash, worker);
   }
 
   public void delServer(Worker worker) {
-    int hash = getHashCode(worker.port);
+    int hash = getHashCode(worker.ip + worker.port);
     treeMapHash.remove(hash);
   }
 
