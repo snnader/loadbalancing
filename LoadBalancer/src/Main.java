@@ -15,15 +15,15 @@ public class Main {
     public static void main(String[] args) {
 
         // All worker nodes
-        List<Worker> workers = new ArrayList<>(10);
-        workers.add(new Worker("172.31.5.174", "8001", 4.8)); // 4
-        workers.add(new Worker("172.31.15.101", "8001", 4.8)); // 5
-        workers.add(new Worker("172.31.12.170", "8001", 4.8)); // 6
-        workers.add(new Worker("172.31.0.255", "8001", 9.6)); // 7
-        workers.add(new Worker("172.31.6.95", "8001", 9.6)); // 8
-        workers.add(new Worker("172.31.24.41", "8001", 4.8)); // 11
-        workers.add(new Worker("172.31.18.105", "8001", 4.8)); // 12
+        List<Worker> workers = new ArrayList<>(8);
         workers.add(new Worker("172.31.27.142", "8001", 4.8)); // 13
+        workers.add(new Worker("172.31.19.112", "8001", 4.8)); // 14
+        workers.add(new Worker("172.31.22.212", "8001", 4.8)); // 15
+        workers.add(new Worker("172.31.30.64", "8001", 4.8)); // 16
+        workers.add(new Worker("172.31.16.251", "8001", 4.8)); // 17
+        workers.add(new Worker("172.31.30.223", "8001", 4.8)); // 18
+        workers.add(new Worker("172.31.24.55", "8001", 9.6)); // 19
+        workers.add(new Worker("172.31.22.37", "8001", 9.6)); // 20
 
         // Load Balancing Algorithm
         Scanner scanner = new Scanner(System.in);
