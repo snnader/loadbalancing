@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter
+import numpy as np
+from scipy.stats import norm
 import os
 
 def plot_algo(filepath):
@@ -12,7 +14,7 @@ def plot_algo(filepath):
             time_hash.append(int(lst[0][1:-1]))
             throughput_hash.append(float(lst[1]))
     file_hash.close()
-    line, = plt.plot(time_hash, gaussian_filter(throughput_hash, sigma=5))
+    line, = plt.plot(time_hash, gaussian_filter(throughput_hash, sigma=1))
     return line
 
 def plot():
@@ -27,13 +29,21 @@ def plot():
     for i in range(1, len(dirlist), 3):
         handles.append(plot_algo(dirlist[i]))
 
+    x = np.arange(0, 60, 0.5)
+    arr = (norm.pdf(x, loc=20, scale=7.5) + norm.pdf(x, loc=40, scale=7.5)) * 18.25 * int(55 * 0.5) * 400
+    line, = plt.plot(x, arr)
+    handles.append(line)
+    algos.append('Request Pattern')
+
     plt.legend(handles=handles,
                labels=algos, loc='best')
     plt.ylim(bottom=0)
     plt.xlim(left=0)
-    plt.xlabel('Time(s)', fontsize=12)
-    plt.ylabel('Throughput(B/s)', fontsize=12)
-    plt.show()
+    plt.xlabel('Time (s)', fontsize=12)
+    plt.ylabel('Throughput (B/s)', fontsize=12)
+    plt.tight_layout()
+    plt.savefig("line_tide")
+    plt.clf()
 
 if __name__ == '__main__':
     plot()
