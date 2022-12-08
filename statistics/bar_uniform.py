@@ -19,8 +19,8 @@ def file_failure_rate(path, failure_rate):
 
 
 def bar():
-    labels = ['Consistent\nHash', 'Estimated\nFinish\nTime', 'Least\nRecently\nUsed', 'Least\nResponse\nTime',
-              'Least Usage', 'Random', 'Round Robin']
+    labels = ['Consistent\nHashing', 'Estimated\nFinish\nTime', 'Least\nRecently\nUsed', 'Least\nResponse\nTime',
+              'Least\nUsage', 'Random', 'Round\nRobin']
     labels_temp = [''.join(item.split()) for item in labels]
     response_time = []
     failure_rate = []
@@ -43,16 +43,18 @@ def bar():
     width = 0.35
     fig, axis = plt.subplots(figsize=(10,6))
 
-    y1 = axis.bar(x - width / 2, response_time, width, label='Average Response Time', color='b')
+    y1 = axis.bar(x - 1.1*width / 2, response_time, width, label='Average Response Time', color='b')
+    plt.yticks(fontsize=15)
     axis2 = axis.twinx()
-    y2 = axis2.bar(x + width / 2, failure_rate, width, label='Failure Rate', color='r')
-    axis.set_xticks(x, labels, size=12)
-    axis.set_ylabel('Average Response Time (ms)', fontdict={'size':15})
-    axis2.set_ylabel('Failure Rate (%)', fontdict={'size':15})
-    plt.legend(handles = [y1, y2], loc = 'upper right')
-    axis.bar_label(y1, labels=response_time_labels, padding=3, fontsize=10)
-    axis2.bar_label(y2, labels=failure_rate_labels, padding=3, fontsize=10)
-    axis.set_ylim(top=550)
+    y2 = axis2.bar(x + 1.1*width / 2, failure_rate, width, label='Failure Rate', color='r')
+    axis.set_xticks(x, labels, size=18)
+    plt.yticks(fontsize=15)
+    axis.set_ylabel('Average Response Time (ms)', fontdict={'size':23})
+    axis2.set_ylabel('Failure Rate (%)', fontdict={'size':23})
+    plt.legend(handles = [y1, y2], loc = 'upper right', fontsize=15)
+    axis.bar_label(y1, labels=response_time_labels, padding=3, fontsize=15)
+    axis2.bar_label(y2, labels=failure_rate_labels, padding=3, fontsize=15)
+    axis.set_ylim(top=600)
     axis2.set_ylim(top=4)
     
     plt.tight_layout()

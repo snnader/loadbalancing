@@ -19,7 +19,8 @@ def plot_algo(filepath):
     return line
 
 def plot():
-    algos = ['Consistent Hash', 'Estimated Finish Time',
+    fig, axis = plt.subplots(figsize=(10,6))
+    algos = ['Consistent Hashing', 'Estimated Finish Time',
                         'Least Recently Used', 'Least Response Time',
                         'Least Usage', 'Random', 'Round Robin']
     dirnames = [''.join(name.split()) for name in algos]
@@ -36,12 +37,13 @@ def plot():
     handles.append(line)
     algos.append('Request Pattern')
 
-    plt.legend(handles=handles,
-               labels=algos, loc='best')
+    plt.legend(handles=handles, labels=algos, loc='best', fontsize=15)
     plt.ylim(bottom=0)
     plt.xlim(left=0)
-    plt.xlabel('Time (s)', fontsize=12)
-    plt.ylabel('Throughput (B/s)', fontsize=12)
+    plt.xlabel('Time (s)', fontsize=22)
+    plt.ylabel('Throughput (B/s)', fontsize=22)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
     plt.tight_layout()
     plt.savefig("line_spike")
     plt.clf()
